@@ -8,12 +8,16 @@ import (
 	"os/exec"
 )
 
+const (
+    PORT = "6666"
+)
+
 func main() {
 	count := 0
 	p := make([]byte, 1024)
 	searching := true
 	
-	laddr, _ := net.ResolveUDPAddr("udp", "localhost:20011")
+	laddr, _ := net.ResolveUDPAddr("udp", "localhost:" + PORT)
 	ln, _ := net.ListenUDP("udp", laddr)
 	
 	// listen for primal
@@ -45,7 +49,7 @@ func main() {
 	cmd := exec.Command("gnome-terminal", "-e", "./counter")
 	cmd.Output()
 	
-	raddr, _ := net.ResolveUDPAddr("udp", ":20011")
+	raddr, _ := net.ResolveUDPAddr("udp", ":" + PORT)
 	conn, _ := net.DialUDP("udp", nil, raddr)
 	defer conn.Close()
 	
